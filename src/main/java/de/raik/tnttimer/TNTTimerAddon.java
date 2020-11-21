@@ -1,6 +1,7 @@
 package de.raik.tnttimer;
 
 import com.google.gson.JsonObject;
+import de.raik.tnttimer.settingelements.DescribedBooleanElement;
 import net.labymod.api.LabyModAddon;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
@@ -59,5 +60,9 @@ public class TNTTimerAddon extends LabyModAddon {
         //Enabled setting
         settings.add(new BooleanElement("Enabled", this, new ControlElement.IconData(Material.LEVER)
                 , "enabled", this.enabled));
+        //Colored
+        settings.add(new DescribedBooleanElement("Colored Time", this
+                , new ControlElement.IconData("labymod/textures/settings/settings/tabping_colored.png"), "colored", this.colored
+                , "The time tag will change the color dynamically depending on remaining time until the explosion"));
     }
 }
