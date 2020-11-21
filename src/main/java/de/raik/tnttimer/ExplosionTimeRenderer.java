@@ -79,6 +79,10 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
      */
     private String getTagString(EntityTNTPrimed tntEntity, float partialTicks) {
         float number = (tntEntity.fuse - partialTicks) / 20F;
+
+        if (number < 0)
+            return null;
+
         return this.decimalFormat.format(number);
     }
 
@@ -111,6 +115,9 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
      * @param tagColor The color of the tag
      */
     private void render(EntityTNTPrimed tntEntity, double x, double y, double z, String tagString , Color tagColor) {
+        //Hide on explosion
+        if (tagString == null)
+            return;
         /*
          * Code snippet to render tags by LabyStudio
          */
@@ -144,7 +151,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
         fontRenderer.drawString(tagString, -fontRenderer.getStringWidth(tagString) / 2, 0, tagColor.getRGB());
         GlStateManager.enableDepth();
         GlStateManager.depthMask(true);
-        fontRenderer.drawString(tagString, -fontRenderer.getStringWidth(tagString) / 2, 0, -1);
+        //fontRenderer.drawString(tagString, -fontRenderer.getStringWidth(tagString) / 2, 0, -1);
         //Reset
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
