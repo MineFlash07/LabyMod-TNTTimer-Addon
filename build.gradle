@@ -16,7 +16,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = project.hasProperty("version") ? project.getProperty("version") : "HEAD-SNAPSHOT"
 group= "de.raik.tnttimer" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "AutoGG"
+archivesBaseName = "TNT-Timer"
 compileJava.options.encoding = "UTF-8"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
