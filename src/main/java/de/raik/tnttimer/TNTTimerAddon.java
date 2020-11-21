@@ -34,7 +34,8 @@ public class TNTTimerAddon extends LabyModAddon {
      */
     @Override
     public void onEnable() {
-
+        //Registering render manger
+        this.getApi().getEventManager().register(new ExplosionTimeRenderer(this));
     }
 
     /**
@@ -64,5 +65,13 @@ public class TNTTimerAddon extends LabyModAddon {
         settings.add(new DescribedBooleanElement("Colored Time", this
                 , new ControlElement.IconData("labymod/textures/settings/settings/tabping_colored.png"), "colored", this.colored
                 , "The time tag will change the color dynamically depending on remaining time until the explosion"));
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public boolean isColored() {
+        return this.colored;
     }
 }
