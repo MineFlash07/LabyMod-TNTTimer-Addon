@@ -1,7 +1,7 @@
 {
     "uuid": "%uuid%",
     "name": "TNT Timer",
-    "mainClass": "de.raik.tnttimer",
+    "mainClass": "de.raik.tnttimer.TNTTimerAddon",
     "description": "Displays the time until a tnt explodes over the tnt.",
     "version": 1,
     "author": "Sk1er LLC",
