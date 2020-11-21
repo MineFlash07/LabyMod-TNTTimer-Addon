@@ -62,7 +62,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
         EntityTNTPrimed tntEntity = (EntityTNTPrimed) entity;
 
         //Check distance
-        if (tntEntity.getDistanceSqToEntity(this.renderManager.livingPlayer) > (double) (64 * 64))
+        if (tntEntity.getDistanceSq(this.renderManager.renderViewEntity) > (double) (64 * 64))
             return;
 
         //Render
@@ -78,7 +78,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
      * @return The tag
      */
     private String getTagString(EntityTNTPrimed tntEntity, float partialTicks) {
-        float number = (tntEntity.fuse - partialTicks) / 20F;
+        float number = (tntEntity.getFuse() - partialTicks) / 20F;
 
         if (number < 0)
             return null;
@@ -100,7 +100,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
         /*
          * Snippet from Sk1ers Code
          */
-        float green = Math.min(tntEntity.fuse / 80F, 1F);
+        float green = Math.min(tntEntity.getFuse() / 80F, 1F);
         return new Color(1F- green, green, 0F);
     }
 
