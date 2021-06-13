@@ -1,6 +1,8 @@
 package de.raik.tnttimer;
 
 import com.google.gson.JsonObject;
+import de.raik.tnttimer.restrictions.GommeHDBedWarsRestriction;
+import de.raik.tnttimer.restrictions.Restriction;
 import de.raik.tnttimer.settingelements.DescribedBooleanElement;
 import net.labymod.api.LabyModAddon;
 import net.labymod.settings.elements.BooleanElement;
@@ -8,6 +10,7 @@ import net.labymod.settings.elements.ControlElement;
 import net.labymod.settings.elements.SettingsElement;
 import net.labymod.utils.Material;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -29,6 +32,11 @@ public class TNTTimerAddon extends LabyModAddon {
     private boolean colored = true;
 
     /**
+     * HashSet containing the restrictions
+     */
+    private final HashSet<Restriction> restrictions = new HashSet<>();
+
+    /**
      * Init method called by
      * the addon api to setup the addon
      */
@@ -36,6 +44,8 @@ public class TNTTimerAddon extends LabyModAddon {
     public void onEnable() {
         //Registering render manger
         this.getApi().getEventManager().register(new ExplosionTimeRenderer(this));
+        //Add restrictions
+        this.restrictions.add(new GommeHDBedWarsRestriction(this));
     }
 
     /**
@@ -65,6 +75,16 @@ public class TNTTimerAddon extends LabyModAddon {
         settings.add(new DescribedBooleanElement("Colored Time", this
                 , new ControlElement.IconData("labymod/textures/settings/settings/tabping_colored.png"), "colored", this.colored
                 , "The time tag will change the color dynamically depending on remaining time until the explosion"));
+    }
+
+    /**
+     * Method checking whether it is restricted
+     * or not
+     *
+     * @return The state of the restiction
+     */
+    public boolean isRestricted() {
+        return this.restrictions.stream().anyMatch(Restriction::isRestricted);
     }
 
     public boolean isEnabled() {

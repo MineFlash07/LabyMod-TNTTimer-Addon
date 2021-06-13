@@ -52,7 +52,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
     @Override
     public void onRender(Entity entity, double x, double y, double z, float partialTicks) {
         //Check enabled
-        if (!this.addon.isEnabled())
+        if (!this.addon.isEnabled() || this.addon.isRestricted())
             return;
 
         //Cancel on wrong entity
@@ -100,7 +100,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
         /*
          * Snippet from Sk1ers Code
          */
-        float green = Math.min(tntEntity.getFuse() / 80F, 1F);
+        float green = Math.max(Math.min(tntEntity.getFuse() / 80F, 1F), 0F);
         return new Color(1F- green, green, 0F);
     }
 
@@ -133,13 +133,12 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
         GlStateManager.scale(-scale, -scale, scale);
         GlStateManager.disableLighting();
         GlStateManager.depthMask(false);
-        GlStateManager.disableDepth();
         GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         //Background
         WorldRendererAdapter worldRenderer = LabyModCore.getWorldRenderer();
         int posX = fontRenderer.getStringWidth(tagString) / 2;
-        GlStateManager.disableTexture2D();
         worldRenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
         worldRenderer.pos(-posX - 1, -1, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
         worldRenderer.pos(-posX - 1, 8, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
@@ -149,9 +148,7 @@ public class ExplosionTimeRenderer implements RenderEntityEvent {
         //Text
         GlStateManager.enableTexture2D();
         fontRenderer.drawString(tagString, -fontRenderer.getStringWidth(tagString) / 2, 0, tagColor.getRGB());
-        GlStateManager.enableDepth();
         GlStateManager.depthMask(true);
-        //fontRenderer.drawString(tagString, -fontRenderer.getStringWidth(tagString) / 2, 0, -1);
         //Reset
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
